@@ -1,3 +1,26 @@
 <%- include ("./parts/header.ejs") %> 
 <%- include ("./parts/navbar.ejs") %> 
+
+<div class="container">
+    <div class="row">
+        <% for (let product of products) { %>
+            <div class="col col-12 col-md-6 col-lg-4 col-xl-3">
+                <div class="card" style="width: 18rem;">
+                    <img src="<%= product.img %> " class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                          <a href="/product/<%= product._id %> "> <%= product.name %> </a>
+                        </h5>
+                        <p class="card-text">Price: <%= product.price %> MYR </p>
+                      <form action="/cart" method="POST"> 
+                        <input type="number" name="amount" class="form-control">
+                        <input type="submit" value="Add to cart" class="btn btn-primary">
+                      </form>
+
+                    </div>
+                  </div>
+            </div>    
+        <% } %>  
+    </div>    
+</div>
 <%- include ("./parts/footer.ejs") %> 
