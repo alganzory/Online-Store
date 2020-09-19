@@ -7,7 +7,7 @@ const path = require ("path");
 
 // routers
 const homeRouter = require ("./routes/home-route");
-
+const productRouter = require ("./routes/product-route");
 
 // app
 const app = express();
@@ -18,7 +18,7 @@ app.use (express.static (path.join (__dirname, "images")));
 
 
 app.use ('/', homeRouter);
-
+app.use ('/product/',productRouter);
 
 
 
