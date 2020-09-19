@@ -7,7 +7,7 @@ const productSchema = mongoose.Schema ({
     name: String,
     img: String,
     price: Number,
-    description: String
+    category: String
 })
 const Product = mongoose.model ("product", productSchema)
 
@@ -26,4 +26,19 @@ exports.getAllProducts = ()=> {
             }).catch (err => reject (err))
         })    
     })  
+}
+
+exports.getProductsByCategory = (category) => {
+    return new Promise ((resolve, reject )=> {
+        // connect to DB
+       mongoose.connect (DB_URL)
+       .then (() => {Product.find({
+           category: category
+       })
+       .then (products => {
+               mongoose.disconnect();
+               resolve (products);
+           }).catch (err => reject (err))
+       })    
+   })  
 }

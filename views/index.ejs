@@ -2,6 +2,15 @@
 <%- include ("./parts/navbar.ejs") %> 
 
 <div class="container">
+    <form action="/" method="GET">
+        <select name="category" class="form-control">
+            <option value="all">All</option>
+            <option value="smart-phones">Smart Phones</option>
+            <option value="gaming-consoles">Gaming Consoles</option>
+            <option value="laptops">Laptops</option>
+        </select>
+        <input type="submit" value="filter" class="btn btn-primary">
+    </form>
     <div class="row">
         <% for (let product of products) { %>
             <div class="col col-12 col-md-6 col-lg-4 col-xl-3">
