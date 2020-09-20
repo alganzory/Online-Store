@@ -56,3 +56,16 @@ exports.getProductById =(id) => {
        })    
    })  
 }
+
+exports.getFirstProduct = () => {
+    return new Promise ((resolve, reject )=> {
+        // connect to DB
+       mongoose.connect (DB_URL)
+       .then (() => {Product.findOne()
+       .then (product => {
+               mongoose.disconnect();
+               resolve (product);
+           }).catch (err => reject (err))
+       })    
+   })  
+}

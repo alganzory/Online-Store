@@ -18,7 +18,7 @@ app.use (express.static (path.join (__dirname, "images")));
 
 
 app.use ('/', homeRouter);
-app.use ('/product/',productRouter);
+app.use ('/product',productRouter);
 
 
 

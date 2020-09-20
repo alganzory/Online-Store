@@ -14,3 +14,13 @@ exports.getProduct = (req,res,next) => {
         })
     // render 
 }
+
+exports.firstProduct= (req,res,next) => {
+    productsModel.getFirstProduct()
+        .then(product => {
+            res.render ('product', {
+                userType: 'non',
+                product: product
+            })
+        })
+}
