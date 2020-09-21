@@ -1,0 +1,19 @@
+<%- include ("./parts/header.ejs") %> 
+<%- include ("./parts/navbar.ejs") %> 
+
+    <div class="container text-center">
+        <h3>Create an Account</h3>
+        <form action="/signup" method="POST">
+            <input type="text" class="form-control" name="username" placeholder="Username">
+            <input type="email" class="form-control" name="email" placeholder="Email">
+            <input type="password" class="form-control" name="password" placeholder="Password">
+            <input type="password" class="form-control" name="confirm-password" placeholder="Confirm Password">
+            <input type="submit" value="Create Account" class="btn btn-primary">    
+        </form>
+        <br>
+        <div>
+            Already have an account? <a href="/login">Login instead</a>
+        </div>
+    </div>
+
+<%- include ("./parts/footer.ejs") %> 
