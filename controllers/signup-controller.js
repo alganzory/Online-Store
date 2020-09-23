@@ -1,6 +1,6 @@
 const express = require ("express");
-const signupModel = require ("../models/signup-model");
-const { render } = require("ejs");
+const authModel = require ("../models/auth-model");
+const ejs = require("ejs");
 
 exports.getSignup = (req, res, next) => {
     res.render('signup', {
@@ -12,7 +12,7 @@ exports.getSignup = (req, res, next) => {
 exports.postSignup = (req,res,next) => {
     
     let newUser = req.body;
-    signupModel.registerNewUser (newUser.username, newUser.email, newUser.password)
+    authModel.registerNewUser (newUser.username, newUser.email, newUser.password)
         .then(()=> {
             res.redirect ('/login');
         })

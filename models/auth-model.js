@@ -46,3 +46,34 @@ exports.registerNewUser = (username, email, password) => {
         })
     })
 }
+
+
+exports.validateLogin = (email, password) => {
+
+    return new Promise ((resolve, reject) => {
+        mongoose.connect (DB_URL)
+            .then (()=> {
+                User.findOne({email:email})
+                    .then (user => {
+                        if (!user) {
+                            reject ("There is no account associated with this email address")
+                            mongoose.disconnect();
+                        } else {
+                            bcrypt.compare (password, user.password)
+                                .then (same => {
+                                    if (!same) {
+                                        reject ("Incorrect password");
+                                        mongoose.disconnect();
+                                    } else {
+                                        mongoose.disconnect();
+                                        resolve (user._id);
+                                    }
+                                })
+                        }
+                    }).catch (err => {
+                        mongoose.disconnect ();
+                        reject (err);
+                    })
+            })
+    })
+}
