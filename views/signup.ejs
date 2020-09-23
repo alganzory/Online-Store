@@ -11,6 +11,12 @@
             <input type="submit" value="Create Account" class="btn btn-primary">    
         </form>
         <br>
+        <% if (authError) { %> 
+        <p class="alert alert-danger">
+            <%=authError %> 
+        </p>
+         <% } %> 
+        <br>
         <div>
             Already have an account? <a href="/login">Login instead</a>
         </div>

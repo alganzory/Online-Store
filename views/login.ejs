@@ -9,6 +9,12 @@
             <input type="submit" value="Login" class="btn btn-primary">    
         </form>
         <br>
+        <% if (authError) { %> 
+        <p class="alert alert-danger">
+            <%=authError %> 
+        </p>
+         <% } %> 
+        <br>
         <div>
             Don't have an account? <a href="/signup">Create an account instead</a>
         </div>

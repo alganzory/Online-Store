@@ -3,7 +3,9 @@ const authModel = require ("../models/auth-model");
 const ejs = require("ejs");
 
 exports.getSignup = (req, res, next) => {
+    
     res.render('signup', {
+        authError: req.flash("authError")[0],
         userType: "non"
     });
 }
@@ -17,7 +19,7 @@ exports.postSignup = (req,res,next) => {
             res.redirect ('/login');
         })
         .catch (err => {
-            console.log (err);
+            req.flash('authError', err);
             res.redirect ('/signup');
         })
 }
