@@ -9,18 +9,21 @@
             <li class="nav-item active">
               <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/cart">Cart</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/orders">Orders</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/login">Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/signup">Signup</a>
-            </li>
+            <% if (isUser) { %> 
+              <li class="nav-item">
+                <a class="nav-link" href="/cart">Cart</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/orders">Orders</a>
+              </li> 
+            <% } else {%>  
+              <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/signup">Signup</a>
+              </li>
+            <% } %> 
             <% if (userType === "admin") {%> 
                 <li class="nav-item">
                 <a class="nav-link" href="/admin/add-product">Add Product</a>
@@ -36,9 +39,11 @@
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
           </form>
+          <% if (isUser) { %> 
           <form action="/logout" method="POST">
             <input type="submit" value="Logout" class ="btn btn-danger">
           </form>
+          <% } %> 
 
       </div>
     </div>

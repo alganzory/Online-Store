@@ -9,7 +9,8 @@ exports.getProduct = (req,res,next) => {
         .then(product=> {
             res.render('product', {
                 userType: "non",
-                product: product
+                product: product,
+                isUser: req.session.userId
             })
         })
     // render 
@@ -20,7 +21,8 @@ exports.firstProduct= (req,res,next) => {
         .then(product => {
             res.render ('product', {
                 userType: 'non',
-                product: product
+                product: product,
+                isUser: req.session.userId
             })
         })
 }

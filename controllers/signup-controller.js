@@ -8,7 +8,8 @@ exports.getSignup = (req, res, next) => {
     res.render('signup', {
         authError: req.flash("authError")[0],
         userType: "non",
-        validationErrors: req.flash("validationErrors")
+        validationErrors: req.flash("validationErrors"),
+        isUser: req.session.userId
     });
 }
 

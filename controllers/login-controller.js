@@ -7,7 +7,8 @@ exports.getLogin = (req, res, next) => {
     res.render('login', {
         authError: req.flash("authError")[0],
         userType: "non",
-        validationErrors: req.flash('validationErrors')
+        validationErrors: req.flash('validationErrors'),
+        isUser: req.session.userId
     });
 }
 

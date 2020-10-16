@@ -3,10 +3,12 @@ const bodyParser = require("body-parser");
 const router = require ("express").Router();
 const signupController = require ('../controllers/signup-controller');
 const check = require ("express-validator").check
+const authGuard = require ('./guards/auth-guard')
 
-router.get ('/', signupController.getSignup);
 
-router.post ('/', bodyParser.urlencoded({extended:true}), 
+router.get ('/', authGuard.notAuth, signupController.getSignup);
+
+router.post ('/', authGuard.notAuth, bodyParser.urlencoded({extended:true}), 
     check('username')
         .not().isEmpty().withMessage ("Username can't be blank!"),
     check('email')

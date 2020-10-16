@@ -19,7 +19,8 @@ exports.getHome = (req,res,next) => {
         .then(products=> {
             res.render ("index", {
                 userType: "not",
-                products: products
+                products: products,
+                isUser: req.session.userId
             })
         })
 }

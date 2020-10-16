@@ -3,9 +3,11 @@ const bodyParser = require("body-parser");
 const router = require ("express").Router();
 const loginController = require ('../controllers/login-controller');
 const check = require ('express-validator').check
-router.get ('/', loginController.getLogin);
+const authGuard = require ('./guards/auth-guard')
 
-router.post ('/',  bodyParser.urlencoded({extended:true}), 
+router.get ('/', authGuard.notAuth, loginController.getLogin);
+
+router.post ('/', authGuard.notAuth, bodyParser.urlencoded({extended:true}), 
     check ('email')
         .not().isEmpty().withMessage ('Email is required!')
         .isEmail().withMessage ('Invalid Email format!'),
