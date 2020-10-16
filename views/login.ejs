@@ -5,7 +5,19 @@
         <h3>Login</h3>
         <form action="/login" method="POST">
             <input type="email" class="form-control" name="email" placeholder="Email">
+            <% let emailError = validationErrors.find (err => err.param === 'email') %>
+            <% if (emailError ) { %>
+                <p class="alert alert-danger">
+                    <%= emailError.msg %> 
+                </p>   
+            <% } %>   
             <input type="password" class="form-control" name="password" placeholder="Password">
+            <% let passwordError = validationErrors.find (err => err.param === 'password') %>
+            <% if (passwordError ) { %>
+                <p class="alert alert-danger">
+                    <%= passwordError.msg %> 
+                </p>   
+            <% } %>   
             <input type="submit" value="Login" class="btn btn-primary">    
         </form>
         <br>
