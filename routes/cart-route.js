@@ -26,8 +26,15 @@ router.post ('/save',
 )
 
 router.post ('/delete',
+    authGuard.isAuth,
     bodyParser.urlencoded({extended:true}),
     cartController.deleteFromCart
+)
+
+router.post ('/delete-all',
+    authGuard.isAuth,
+    bodyParser.urlencoded({extended:true}),
+    cartController.deleteAll
 )
 
 

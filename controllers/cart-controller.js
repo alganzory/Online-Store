@@ -72,3 +72,14 @@ exports.deleteFromCart = (req,res,next) => {
         res.redirect ('/cart');  // redirect them to wherever they came from 
     }
 }
+
+
+exports.deleteAll = (req,res,next) => {
+
+    cartModel.deleteAllByUserId (req.session.userId)
+        .then (() => {
+            res.redirect ('/cart');
+        }).catch (err => {
+            console.log (err)
+        })
+}

@@ -106,3 +106,20 @@ exports.deleteItemById = cartId => {
             })
     })
 }
+
+exports.deleteAllByUserId = userId => {
+
+    return new Promise ((resolve, reject) => {
+        mongoose.connect (DB_URL)
+            .then (() => {
+              CartItem.deleteMany({userId:userId})
+                .then(() => {
+                    resolve();
+                    mongoose.disconnect();
+                })
+                .catch ((deletionError) => {
+                    console.log (deletionError);
+                })
+            })
+    })
+}
