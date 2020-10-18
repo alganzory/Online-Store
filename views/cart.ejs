@@ -14,26 +14,43 @@
             <th scope="col">Price</th>
             <th scope="col">Amount</th>
             <th scope="col">Total</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
+            <% let totalPrice = 0; %> 
             <% for (let i =0; i< items.length; i++ ){  %> 
             <tr>
                 <th scope="row"><%= i+1 %> </th>
                 <td> <a href="/product/<%= items[i].productId %>"><%= items[i].name %></a> </td>
-                <td> $ <%= items[i].price %> </td>
+                <td> $<%= items[i].price %> </td>
                 <form method="POST">
                     <td> <input type="text" name="amount" class="form-control" value="<%= items[i].amount %>"> </td>
-                    <td> <%= items[i].price * items[i].amount %> $ </td>
+                    <td> $<%= items[i].price * items[i].amount %> </td>
+                    <% totalPrice += items[i].price * items[i].amount  %> 
                     <td>
                         <input type="hidden" name="cartId" value="<%= items[i]._id %>">
-                        <input type="submit" class="btn btn-success" value="Save" formaction="/cart/save">
+                        <input type="submit" class="btn btn-info" value="Save" formaction="/cart/save">
+                        <input type="submit" class="btn btn-success " value="Buy" formaction="/cart/buy">
                         <input type="submit" class="btn btn-danger" value="Delete" formaction="/cart/delete">
                     </td>
                 </form>
             </tr>
+            <% } %> 
+            <tr class="table-info">
+                <td></td>
+                <th>Total Price</th>
+                <td></td>
+                <td></td>
+                <td>$<%= totalPrice %> </td>
+              
+                <form method="POST">
+                    <td>
+                    <input type="submit" class="btn btn-success" value="Order All" formaction="/cart/order-all">
+                    <input type="submit" class="btn btn-danger" value="Delete All" formaction="/cart/delete-all">
+                    </td>   
+                </form>
             </tr>
-        <% } %> 
         </tbody>
       </table>
     <% } %> 
