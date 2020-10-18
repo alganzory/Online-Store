@@ -26,7 +26,7 @@
                     <td> <input type="text" name="amount" class="form-control" value="<%= items[i].amount %>"> </td>
                     <td> <%= items[i].price * items[i].amount %> $ </td>
                     <td>
-                        <input type="hidden" name="productId" value="<%= items[i]._id %>">
+                        <input type="hidden" name="cartId" value="<%= items[i]._id %>">
                         <input type="submit" class="btn btn-success" value="Save" formaction="/cart/save">
                         <input type="submit" class="btn btn-danger" value="Delete" formaction="/cart/delete">
                     </td>

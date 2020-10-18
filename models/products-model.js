@@ -48,12 +48,15 @@ exports.getProductById =(id) => {
     return new Promise ((resolve, reject )=> {
         // connect to DB
        mongoose.connect (DB_URL)
-       .then (() => {Product.findById(id)
-       .then (product => {
-               mongoose.disconnect();
-               resolve (product);
-           }).catch (err => reject (err))
-       })    
+        .then (() => {
+            Product.findById(id)
+                .then (product => {
+                resolve (product);
+                mongoose.disconnect();
+            })
+            .catch (err => reject (err))
+        })
+        
    })  
 }
 

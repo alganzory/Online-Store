@@ -16,18 +16,34 @@ exports.addNewItem = data => {
     return new Promise ((resolve,reject)=> { 
         mongoose.connect(DB_URL)
             .then(()=> {
-                let newItem = new CartItem (data);
-                newItem.save()
-                    .then(() => {
-                        mongoose.disconnect();
-                        resolve();
+                // firstly check if the item has previously been added to the cart
+                // of this user
+                CartItem.findOne({userId: data.userId, productId: data.productId})
+                    .then (existingItem => {
+                        if (existingItem) {
+                            existingItem.amount += (+data.amount);
+                            existingItem.timeStamp = Date.now();
+                            return existingItem.save();
+                        }
+                        else {
+                            let newItem = new CartItem (data);
+                            return newItem.save();
+                        }
                     })
-                    .catch(err => {
-                        mongoose.disconnect();
-                        reject (err);
+                        .then(() => {
+                            mongoose.disconnect();
+                            resolve();
+                        })
+                        .catch(saveErr => {
+                            mongoose.disconnect();
+                            reject (saveErr);
+                        })
+                    .catch (findErr => {
+                        console.log (findErr)
                     })
-            }).catch (() => {
-                console.log ('unable to connect')
+            })
+            .catch ( connectionErr => {
+                console.log (connectionErr)
             })
     })
 }
@@ -52,13 +68,13 @@ exports.getItemsByUserId = userId => {
 
 
 
-exports.updateItemById = (productId, newData) => {
+exports.updateItemById = (cartId, newData) => {
 
     return new Promise ((resolve, reject) => {
         mongoose.connect (DB_URL)
             .then (() => {
                 mongoose.set('useFindAndModify', false);
-                CartItem.findByIdAndUpdate (productId, newData)
+                CartItem.findByIdAndUpdate (cartId, newData)
                     .then ( ()=> {
                         resolve ();
                         mongoose.disconnect();
@@ -72,13 +88,13 @@ exports.updateItemById = (productId, newData) => {
 }
 
 
-exports.deleteItemById = productId => {
+exports.deleteItemById = cartId => {
 
     return new Promise ((resolve, reject) => {
         mongoose.connect (DB_URL)
             .then (() => {
                 mongoose.set('useFindAndModify', false);
-                CartItem.findByIdAndDelete (productId)
+                CartItem.findByIdAndDelete (cartId)
                     .then ( ()=> {
                         resolve ();
                         mongoose.disconnect();

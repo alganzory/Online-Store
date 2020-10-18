@@ -14,6 +14,9 @@ exports.getProduct = (req,res,next) => {
                 cartErrors: req.flash('cartErrors')[0]
             })
         })
+        .catch (err => {
+            console.log (err)
+        })
     // render 
 }
 

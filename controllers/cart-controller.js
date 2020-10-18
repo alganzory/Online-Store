@@ -41,8 +41,7 @@ exports.postCart = (req,res,next) => {
 
 exports.editCart = (req,res,next) => {
     if (validationResult(req).isEmpty()) {
-        cartModel.updateItemById(req.body.productId, {
-          productId: req.body.productId,
+        cartModel.updateItemById(req.body.cartId, {
           timeStamp: Date.now(),
           amount: req.body.amount
         })
@@ -61,7 +60,7 @@ exports.editCart = (req,res,next) => {
 
 exports.deleteFromCart = (req,res,next) => {
     if (validationResult(req).isEmpty()) {
-        cartModel.deleteItemById(req.body.productId)
+        cartModel.deleteItemById(req.body.cartId)
             .then (() => {
                 res.redirect ('/cart');
             }).catch (err => {
