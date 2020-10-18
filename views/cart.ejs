@@ -1,0 +1,40 @@
+<%- include ("./parts/header.ejs") %> 
+<%- include ("./parts/navbar.ejs") %> 
+
+<div class="container">
+    <% if(items.length === 0) { %>
+        <p class="alert alert-danger">No items added to cart</p>
+    <% } else { %>
+
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Product</th>
+            <th scope="col">Price</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% for (let i =0; i< items.length; i++ ){  %> 
+            <tr>
+                <th scope="row"><%= i+1 %> </th>
+                <td> <a href="/product/<%= items[i].productId %>"><%= items[i].name %></a> </td>
+                <td> $ <%= items[i].price %> </td>
+                <form method="POST">
+                    <td> <input type="text" name="amount" class="form-control" value="<%= items[i].amount %>"> </td>
+                    <td> <%= items[i].price * items[i].amount %> $ </td>
+                    <td>
+                        <input type="hidden" name="productId" value="<%= items[i]._id %>">
+                        <input type="submit" class="btn btn-success" value="Save" formaction="/cart/save">
+                        <input type="submit" class="btn btn-danger" value="Delete" formaction="/cart/delete">
+                    </td>
+                </form>
+            </tr>
+            </tr>
+        <% } %> 
+        </tbody>
+      </table>
+    <% } %> 
+</div>

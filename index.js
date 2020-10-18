@@ -18,6 +18,7 @@ const productRouter = require ("./routes/product-route");
 const signupRouter = require ('./routes/signup-route');
 const loginRouter = require ('./routes/login-route');
 const logoutRouter = require ('./routes/logout-route');
+const cartRouter = require ('./routes/cart-route');
 // app
 const app = express();
 
@@ -38,4 +39,5 @@ app.use ('/product',productRouter);
 app.use ('/signup', signupRouter);
 app.use ('/login', loginRouter);
 app.use ('/logout', logoutRouter)
+app.use ('/cart', cartRouter)
 app.listen (3000, (err)=> console.log ("Listening on port 3000"));

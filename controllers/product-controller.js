@@ -8,9 +8,10 @@ exports.getProduct = (req,res,next) => {
     productsModel.getProductById(id)
         .then(product=> {
             res.render('product', {
-                userType: "non",
+                pageTitle: 'View ' + product.name,
                 product: product,
-                isUser: req.session.userId
+                isUser: req.session.userId,
+                cartErrors: req.flash('cartErrors')[0]
             })
         })
     // render 
@@ -20,7 +21,7 @@ exports.firstProduct= (req,res,next) => {
     productsModel.getFirstProduct()
         .then(product => {
             res.render ('product', {
-                userType: 'non',
+                pageTitle: 'View '+ product.name,
                 product: product,
                 isUser: req.session.userId
             })

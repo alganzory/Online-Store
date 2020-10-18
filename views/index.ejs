@@ -11,7 +11,11 @@
         </select>
         <input type="submit" value="filter" class="btn btn-primary">
     </form>
-
+    <% if (cartErrors) { %>
+        <div class="alert alert-danger">
+            <%= cartErrors.msg %> 
+        </div>    
+    <% } %> 
     <% if (products.length === 0) { %> 
         <div class="alert alert-danger">
             There are no products to display at the moment.
@@ -29,6 +33,10 @@
                             <p class="card-text">Price: <%= product.price %> MYR </p>
                         <form action="/cart" method="POST"> 
                             <input type="number" name="amount" class="form-control">
+                            <input type="hidden" name="productId" value="<%=product._id %>">
+                            <input type="hidden" name="productName" value="<%= product.name %>" >
+                            <input type="hidden" name="productPrice" value=<%=product.price%>>
+                            <input type="hidden" name="redirectTo" value=<%='/'%>>
                             <input type="submit" value="Add to cart" class="btn btn-primary">
                         </form>
 

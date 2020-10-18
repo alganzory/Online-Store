@@ -1,6 +1,11 @@
 <%- include ("./parts/header.ejs") %> 
 <%- include ("./parts/navbar.ejs") %> 
 <div class="container">
+    <% if (cartErrors) { %>
+        <div class="alert alert-danger">
+            <%= cartErrors.msg %> 
+        </div>    
+    <% } %> 
     <% if (!product) { %> 
     <div class="alert alert-danger">
         No such item exists.
@@ -11,8 +16,12 @@
                 <div class="card" style="width: 100%;">
                     <img src="/<%= product.img%>" class="card-img-top" style="max-height: 400px">
                     <div class="card-body">
-                        <form action="/cart" method="POST" class="add-to-cart-form">
+                        <form action="/cart" method="POST" class="add-to-cart-form"> 
                             <input type="number" name="amount" class="form-control">
+                            <input type="hidden" name="productId" value="<%=product._id %>">
+                            <input type="hidden" name="productName" value="<%= product.name %>" >
+                            <input type="hidden" name="productPrice" value=<%=product.price%>>
+                            <input type="hidden" name="redirectTo" value=<%='/product/'+ product._id%>>
                             <input type="submit" value="Add to cart" class="btn btn-primary">
                         </form>
                     </div>

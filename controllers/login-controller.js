@@ -5,8 +5,8 @@ const validationResult = require ('express-validator').validationResult
 exports.getLogin = (req, res, next) => {
     
     res.render('login', {
+        pageTitle: "Login",
         authError: req.flash("authError")[0],
-        userType: "non",
         validationErrors: req.flash('validationErrors'),
         isUser: req.session.userId
     });

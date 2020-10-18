@@ -18,9 +18,10 @@ exports.getHome = (req,res,next) => {
     productsModelPromise
         .then(products=> {
             res.render ("index", {
-                userType: "not",
+                pageTitle: "Home",
                 products: products,
-                isUser: req.session.userId
+                isUser: req.session.userId,
+                cartErrors: req.flash('cartErrors')[0]
             })
         })
 }
