@@ -1,0 +1,49 @@
+<%- include ("./parts/header.ejs") %> 
+<%- include ("./parts/navbar.ejs") %> 
+
+<div class="container">
+
+    <% if(orders.length === 0) { %>
+        <p class="alert alert-danger">You have not made any orders yet</p>
+    <% } else { %>
+
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Product</th>
+            <th scope="col">Price</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Total</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% for (let i =0; i< orders.length; i++ ){  %> 
+            <tr>
+                <th scope="row"><%= i+1 %> </th>
+                <td> <a href="/product/<%= orders[i].productId %>"><%= orders[i].name %></a> </td>
+                <td> $<%= orders[i].price %> </td>
+                
+                <form method="POST">
+                    <% if (!orders[i].status) {%>
+                        <td> <input type="text" name="amount" class="form-control" value="<%= orders[i].amount %>"> </td>
+                    <% } else { %>  
+                       <td> <%= orders[i].amount %> </td>
+                    <% } %> 
+                    <td> $<%= orders[i].price * orders[i].amount %> </td>
+                    <% if (!orders[i].status) { %>
+                        <td>Pending</td>             
+                    <td>
+                        <input type="hidden" name="orderId" value="<%= orders[i]._id %>">
+                        <input type="submit" class="btn btn-info" value="Save" formaction="/orders/save">
+                        <input type="submit" class="btn btn-danger" value="Delete" formaction="/orders/cancel">
+                    </td>
+                    <% } %>
+                </form>
+            </tr>
+            <% } %> 
+        </tbody>
+      </table>
+    <% } %> 
+</div>
