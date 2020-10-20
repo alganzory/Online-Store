@@ -83,3 +83,53 @@ exports.deleteAll = (req,res,next) => {
             console.log (err)
         })
 }
+
+
+exports.confirmOnePost = (req,res,next) => {
+    res.redirect ('/cart/confirm/'+ req.body.cartId);
+}
+
+exports.confirmAllPost = (req,res,next) => {
+    res.redirect ('/cart/confirm/all');
+}
+
+exports.confirmOneGet = (req,res,next) => {
+    
+    console.log (req.params)
+    let itemId = req.params.itemId;
+    console.log (itemId)
+    cartModel.getItemById (itemId)
+        .then (itemToConfirm => 
+            res.render ('cart-confirm', {
+                pageTitle: 'Confirm Order',
+                isUser: req.session.userId,
+                itemsToConfirm: [itemToConfirm],
+                oneOrder: true,
+                addressErrors : req.flash('addressErrors')[0]
+            })
+        ).catch (err => {
+           res.redirect ('/')
+           console.log (err)
+        }) 
+}
+
+exports.confirmAllGet  = (req,res,next) => {
+    let userId = req.session.userId;
+    cartModel.getItemsByUserId (userId)
+    .then (itemsToConfirm =>  {
+        res.render ('cart-confirm', {
+            pageTitle: 'Cart',
+            isUser: req.session.userId,
+            itemsToConfirm: itemsToConfirm,
+            oneOrder: false,
+            addressErrors : req.flash ('addressErrors')[0]
+        })
+    })
+    .catch (err => {
+        console.log (err)
+    }) 
+}
+
+exports.cancelAll = (req,res,next) => {
+    res.redirect ('/cart')
+}

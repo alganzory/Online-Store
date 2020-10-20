@@ -123,3 +123,26 @@ exports.deleteAllByUserId = userId => {
             })
     })
 }
+
+exports.getItemById = itemId => {
+    return new Promise ((resolve, reject) => {
+        mongoose.connect (DB_URL)
+            .then (() => {
+                CartItem.findById (itemId)
+                    .then (result => {
+                        if (!result) {
+                            reject('This matches no item in cart');
+                            mongoose.disconnect();
+                        }
+                        else {
+                            resolve (result);
+                            mongoose.disconnect();
+                        }
+                    })
+                    .catch (err => {
+                        reject (err);
+                        mongoose.disconnect();
+                    })
+            })
+    })
+}

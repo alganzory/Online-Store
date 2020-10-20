@@ -1,0 +1,66 @@
+<%- include ("./parts/header.ejs") %> 
+<%- include ("./parts/navbar.ejs") %> 
+
+<div class="container">
+    
+    <% if (addressErrors) { %>
+        <div class="alert alert-danger">
+            <%= addressErrors.msg %> 
+        </div>    
+    <% } %> 
+
+    <% if(itemsToConfirm.length === 0) { %>
+        <p class="alert alert-danger">There are no items in your cart</p>
+    <% } else { %>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Total</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <% let totalPrice = 0; %> 
+                <% for (let i =0; i< itemsToConfirm.length; i++ ){  %> 
+                <tr>
+                    <th scope="row"><%= i+1 %> </th>
+                    <td> <a href="/product/<%= itemsToConfirm[i].productId %>"><%= itemsToConfirm[i].name %></a> </td>
+                    <td> $<%= itemsToConfirm[i].price %> </td>
+                    <td> <%= itemsToConfirm[i].amount %> </td>
+                    <td> $<%= itemsToConfirm[i].price * itemsToConfirm[i].amount %> </td>
+                    <% totalPrice += itemsToConfirm[i].price * itemsToConfirm[i].amount  %>
+                    <td></td>
+                </tr>
+                <% } %> 
+                <tr class="table-info">
+                    <td></td>
+                    <th>Total Price</th>
+                    <td></td>
+                    <td></td>
+                    <td>$<%= totalPrice %> </td>
+                    <td></td>
+                </tr>  
+                <tr>
+                
+                </tr>
+            </tbody> 
+            
+        </table>
+        <form method="POST">
+                <input type="text" name="address" class="form-control" placeholder="Where do you want it delivered?">
+                <% if (oneOrder) { %> 
+                    <input type="hidden" name="cartId" value="<%= itemsToConfirm[0]._id %>">
+                    <input type="submit" class="btn btn-success" value="Buy Now" formaction="/orders/new-one">
+                    <% } else { %>
+                    <input type="submit" class="btn btn-success" value="Place Orders" formaction="/orders/new-all">
+                <% } %>  
+                <input type="submit" class="btn btn-danger" value="Cancel" formaction="/cart/cancel">
+                </td>   
+            </form>
+    <% } %> 
+</div>

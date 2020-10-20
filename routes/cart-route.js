@@ -37,5 +37,33 @@ router.post ('/delete-all',
     cartController.deleteAll
 )
 
+router.post ('/confirm',
+    authGuard.isAuth,
+    bodyParser.urlencoded({extended:true}),
+    cartController.confirmOnePost
+)
+
+router.post ('/confirm/all',
+    authGuard.isAuth,
+    bodyParser.urlencoded({extended:true}),
+    cartController.confirmAllPost
+)
+
+router.get ('/confirm/all',
+    authGuard.isAuth,
+    bodyParser.urlencoded({extended:true}),
+    cartController.confirmAllGet
+)
+
+router.get ('/confirm/:itemId',
+    authGuard.isAuth,
+    bodyParser.urlencoded({extended:true}),
+    cartController.confirmOneGet
+)
+
+router.post ('/cancel', 
+    authGuard.isAuth,
+    cartController.cancelAll
+)
 
 module.exports = router
