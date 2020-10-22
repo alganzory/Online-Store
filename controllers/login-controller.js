@@ -8,7 +8,8 @@ exports.getLogin = (req, res, next) => {
         pageTitle: "Login",
         authError: req.flash("authError")[0],
         validationErrors: req.flash('validationErrors'),
-        isUser: req.session.userId
+        isUser: req.session.userId,
+        isAdmin:false
     });
 }
 
@@ -18,8 +19,9 @@ exports.postLogin = (req,res,next) => {
     if (validationResult (req).isEmpty() ) {
         let user = req.body;
         authModel.validateLogin (user.email, user.password)
-            .then (id => {
-                req.session.userId =id;
+            .then (result => {
+                req.session.userId =result.id;
+                req.session.isAdmin =result.isAdmin;
                 res.redirect ('/'); 
             })
             .catch (err => {

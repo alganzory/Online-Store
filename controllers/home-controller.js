@@ -21,7 +21,8 @@ exports.getHome = (req,res,next) => {
                 pageTitle: "Home",
                 products: products,
                 isUser: req.session.userId,
-                cartErrors: req.flash('cartErrors')[0]
+                cartErrors: req.flash('cartErrors')[0],
+                isAdmin:req.session.isAdmin
             })
         })
 }

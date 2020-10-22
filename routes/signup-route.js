@@ -17,7 +17,7 @@ router.post ('/', authGuard.notAuth, bodyParser.urlencoded({extended:true}),
     check('password')
         .not().isEmpty().withMessage ("Password can't be empty!")
         .isLength ({min:6}).withMessage ("Password needs to be at least 6 chatacters"),
-    check ('confirmpassword').custom((value, {req})=>{
+    check ('confirmPassword').custom((value, {req})=>{
         if (value === req.body.password) return true;
         else throw "passwords don't match!";
     }),

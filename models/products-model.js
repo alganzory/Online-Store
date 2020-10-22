@@ -63,12 +63,32 @@ exports.getProductById =(id) => {
 exports.getFirstProduct = () => {
     return new Promise ((resolve, reject )=> {
         // connect to DB
-       mongoose.connect (DB_URL)
-       .then (() => {Product.findOne()
-       .then (product => {
-               mongoose.disconnect();
-               resolve (product);
-           }).catch (err => reject (err))
-       })    
-   })  
+        mongoose.connect (DB_URL)
+            .then (() => {
+                Product.findOne()
+                    .then (product => {
+                    mongoose.disconnect();
+                    resolve (product);
+                    })
+                    .catch (err => reject (err))
+            })    
+    })  
+}
+
+exports.newProduct = data => {
+    return new Promise ((resolve,reject) => {
+        mongoose.connect(DB_URL)
+            .then (() => {
+                let newProduct = new Product (data);
+                newProduct.save()
+                    .then(()=> {
+                        resolve(newProduct._id);
+                        mongoose.disconnect();
+                    })
+                    .catch(err=> {
+                        reject(err);
+                        mongoose.disconnect();
+                    })
+            })
+    })
 }

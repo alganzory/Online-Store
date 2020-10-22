@@ -25,7 +25,7 @@
                     <%= passwordError.msg %> 
                 </p>    
             <% } %> 
-            <input type="password" class="form-control" name="confirm-password" placeholder="Confirm Password">
+            <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm Password">
             <% let confirmPasswordError = validationErrors.find(err => err.param === 'confirmPassword') %> 
             <% if (confirmPasswordError) { %>
                 <p class="alert alert-danger">

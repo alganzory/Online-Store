@@ -84,7 +84,8 @@ exports.getOrders = (req, res, next) => {
                 pageTitle: 'Orders',
                 OrdersErrors: req.flash('ordersErrors')[0],
                 isUser: req.session.userId,
-                orders: orders
+                orders: orders,
+                isAdmin:req.session.isAdmin
             })
         ).catch (err => {
             console.log (err)

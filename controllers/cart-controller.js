@@ -11,7 +11,8 @@ exports.getCart = (req, res, next) => {
                 pageTitle: 'Cart',
                 cartErrors: req.flash('cartErrors')[0],
                 isUser: req.session.userId,
-                items: items
+                items: items,
+                isAdmin:req.session.isAdmin
             })
         ).catch (err => {
             console.log (err)
@@ -105,7 +106,8 @@ exports.confirmOneGet = (req,res,next) => {
                 isUser: req.session.userId,
                 itemsToConfirm: [itemToConfirm],
                 oneOrder: true,
-                addressErrors : req.flash('addressErrors')[0]
+                addressErrors : req.flash('addressErrors')[0],
+                isAdmin:req.session.isAdmin
             })
         ).catch (err => {
            res.redirect ('/')
@@ -122,7 +124,8 @@ exports.confirmAllGet  = (req,res,next) => {
             isUser: req.session.userId,
             itemsToConfirm: itemsToConfirm,
             oneOrder: false,
-            addressErrors : req.flash ('addressErrors')[0]
+            addressErrors : req.flash ('addressErrors')[0],
+            isAdmin:req.session.isAdmin
         })
     })
     .catch (err => {

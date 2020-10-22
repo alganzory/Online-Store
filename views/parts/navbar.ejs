@@ -24,14 +24,12 @@
                 <a class="nav-link" href="/signup">Signup</a>
               </li>
             <% } %> 
-            <% if (1) {%> 
+            <% if (isAdmin) {%> 
                 <li class="nav-item">
-                <a class="nav-link" href="/admin/add-product">Add Product</a>
+                <a class="nav-link" href="/admin/add">Add Product</a>
                 </li>
-            <% } %> 
-            <% if (1) {%> 
                 <li class="nav-item">
-                <a class="nav-link" href="/admin/add-product">Manage Orders</a>
+                <a class="nav-link" href="/admin/orders">Manage Orders</a>
                 </li>
             <% } %> 
           </ul>

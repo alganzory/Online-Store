@@ -11,7 +11,8 @@ exports.getProduct = (req,res,next) => {
                 pageTitle: 'View ' + product.name,
                 product: product,
                 isUser: req.session.userId,
-                cartErrors: req.flash('cartErrors')[0]
+                cartErrors: req.flash('cartErrors')[0],
+                isAdmin:req.session.isAdmin
             })
         })
         .catch (err => {
@@ -26,7 +27,8 @@ exports.firstProduct= (req,res,next) => {
             res.render ('product', {
                 pageTitle: 'View '+ product.name,
                 product: product,
-                isUser: req.session.userId
+                isUser: req.session.userId,
+                isAdmin:req.session.isAdmin
             })
         })
 }
