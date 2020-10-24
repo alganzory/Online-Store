@@ -1,36 +1,37 @@
-<%- include ("./parts/header.ejs") %> 
-<%- include ("./parts/navbar.ejs") %> 
+<%- include ("./parts/header.ejs") %>
+<%- include ("./parts/navbar.ejs") %>
 
 <div class="container">
 
     <% if(orders.length === 0) { %>
-        <p class="alert alert-danger">You have not made any orders yet</p>
+    <p class="alert alert-danger">You have not made any orders yet</p>
     <% } else { %>
 
+    <h2 class="mt-4 mb-3">Orders</h2>
     <table class="table table-striped">
         <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Product</th>
-            <th scope="col">Price</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Total</th>
-            <th scope="col">Status</th>
-          </tr>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Total</th>
+                <th scope="col">Status</th>
+            </tr>
         </thead>
         <tbody>
-            <% for (let i =0; i< orders.length; i++ ){  %> 
+            <% for (let i =0; i< orders.length; i++ ){  %>
             <tr>
                 <th scope="row"><%= i+1 %> </th>
                 <td> <a href="/product/<%= orders[i].productId %>"><%= orders[i].name %></a> </td>
                 <td> $<%= orders[i].price %> </td>
-                
+
                 <form method="POST">
                     <% if (orders[i].status === 'pending') {%>
-                        <td> <input type="text" name="amount" class="form-control" value="<%= orders[i].amount %>"> </td>
-                    <% } else { %>  
-                       <td> <%= orders[i].amount %> </td>
-                    <% } %> 
+                    <td> <input type="text" name="amount" class="form-control" value="<%= orders[i].amount %>"> </td>
+                    <% } else { %>
+                    <td> <%= orders[i].amount %> </td>
+                    <% } %>
                     <td> $<%= orders[i].price * orders[i].amount %> </td>
                     <td> <%=orders[i].status%> </td>
                     <% if (orders[i].status === 'pending') {%>
@@ -42,8 +43,9 @@
                     <% } %>
                 </form>
             </tr>
-            <% } %> 
+            <% } %>
         </tbody>
-      </table>
-    <% } %> 
+    </table>
+    <% } %>
 </div>
+<%- include ("./parts/footer.ejs") %>

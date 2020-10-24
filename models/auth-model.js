@@ -84,5 +84,4 @@ exports.validateLogin = (email, password) => {
             })
     })
 }
-
 exports.UserModel = User;

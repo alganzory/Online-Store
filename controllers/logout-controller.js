@@ -1,8 +1,7 @@
-const express = require ("express");
+const express = require("express");
 
-
-exports.logout = (req,res,next) => {
-    req.session.destroy( ()=> {
-        res.redirect ('/');
-    })
-}
+exports.logout = (req, res, next) => {
+  req.session.destroy(() => {
+    res.redirect("/");
+  });
+};

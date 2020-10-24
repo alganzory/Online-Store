@@ -1,25 +1,26 @@
-<%- include ("./parts/header.ejs") %> 
-<%- include ("./parts/navbar.ejs") %> 
+<%- include ("./parts/header.ejs") %>
+<%- include ("./parts/navbar.ejs") %>
 
 <div class="container">
     <% if(items.length === 0) { %>
-        <p class="alert alert-danger">No items added to cart</p>
+    <p class="alert alert-danger">No items added to cart</p>
     <% } else { %>
 
+    <h2 class="mt-4 mb-3">Cart</h2>
     <table class="table table-striped">
         <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Product</th>
-            <th scope="col">Price</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Total</th>
-            <th scope="col"></th>
-          </tr>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Total</th>
+                <th scope="col"></th>
+            </tr>
         </thead>
         <tbody>
-            <% let totalPrice = 0; %> 
-            <% for (let i =0; i< items.length; i++ ){  %> 
+            <% let totalPrice = 0; %>
+            <% for (let i =0; i< items.length; i++ ){  %>
             <tr>
                 <th scope="row"><%= i+1 %> </th>
                 <td> <a href="/product/<%= items[i].productId %>"><%= items[i].name %></a> </td>
@@ -27,7 +28,7 @@
                 <form method="POST">
                     <td> <input type="text" name="amount" class="form-control" value="<%= items[i].amount %>"> </td>
                     <td> $<%= items[i].price * items[i].amount %> </td>
-                    <% totalPrice += items[i].price * items[i].amount  %> 
+                    <% totalPrice += items[i].price * items[i].amount  %>
                     <td>
                         <input type="hidden" name="cartId" value="<%= items[i]._id %>">
                         <input type="submit" class="btn btn-info" value="Save" formaction="/cart/save">
@@ -36,22 +37,23 @@
                     </td>
                 </form>
             </tr>
-            <% } %> 
+            <% } %>
             <tr class="table-info">
                 <td></td>
                 <th>Total Price</th>
                 <td></td>
                 <td></td>
                 <td>$<%= totalPrice %> </td>
-              
+
                 <form method="POST">
                     <td>
-                    <input type="submit" class="btn btn-success" value="Order All" formaction="/cart/confirm/all">
-                    <input type="submit" class="btn btn-danger" value="Delete All" formaction="/cart/delete-all">
-                    </td>   
+                        <input type="submit" class="btn btn-success" value="Order All" formaction="/cart/confirm/all">
+                        <input type="submit" class="btn btn-danger" value="Delete All" formaction="/cart/delete-all">
+                    </td>
                 </form>
             </tr>
         </tbody>
-      </table>
-    <% } %> 
+    </table>
+    <% } %>
 </div>
+<%- include ("./parts/footer.ejs") %>

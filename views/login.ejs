@@ -1,35 +1,35 @@
-<%- include ("./parts/header.ejs") %> 
-<%- include ("./parts/navbar.ejs") %> 
+<%- include ("./parts/header.ejs") %>
+<%- include ("./parts/navbar.ejs") %>
 
-    <div class="container text-center">
-        <h3>Login</h3>
-        <form action="/login" method="POST">
-            <input type="email" class="form-control" name="email" placeholder="Email">
-            <% let emailError = validationErrors.find (err => err.param === 'email') %>
-            <% if (emailError ) { %>
-                <p class="alert alert-danger">
-                    <%= emailError.msg %> 
-                </p>   
-            <% } %>   
-            <input type="password" class="form-control" name="password" placeholder="Password">
-            <% let passwordError = validationErrors.find (err => err.param === 'password') %>
-            <% if (passwordError ) { %>
-                <p class="alert alert-danger">
-                    <%= passwordError.msg %> 
-                </p>   
-            <% } %>   
-            <input type="submit" value="Login" class="btn btn-primary">    
-        </form>
-        <br>
-        <% if (authError) { %> 
+<div class="container text-center">
+    <h1 class="mt-4 mb-3">Login</h1>
+    <form action="/login" method="POST">
+        <input type="email" class="form-control mb-2" name="email" placeholder="Email">
+        <% let emailError = validationErrors.find (err => err.param === 'email') %>
+        <% if (emailError ) { %>
         <p class="alert alert-danger">
-            <%=authError %> 
+            <%= emailError.msg %>
         </p>
-         <% } %> 
-        <br>
-        <div>
-            Don't have an account? <a href="/signup">Create an account instead</a>
-        </div>
+        <% } %>
+        <input type="password" class="form-control mb-2" name="password" placeholder="Password">
+        <% let passwordError = validationErrors.find (err => err.param === 'password') %>
+        <% if (passwordError ) { %>
+        <p class="alert alert-danger">
+            <%= passwordError.msg %>
+        </p>
+        <% } %>
+        <input type="submit" value="Login" class="btn btn-primary">
+    </form>
+    <br>
+    <% if (authError) { %>
+    <p class="alert alert-danger">
+        <%=authError %>
+    </p>
+    <% } %>
+    <br>
+    <div>
+        Don't have an account? <a href="/signup">Create an account instead</a>
     </div>
+</div>
 
-<%- include ("./parts/footer.ejs") %> 
+<%- include ("./parts/footer.ejs") %>

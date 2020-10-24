@@ -1,40 +1,38 @@
-<%- include ("./parts/header.ejs") %> 
-<%- include ("./parts/navbar.ejs") %> 
+<%- include ("./parts/header.ejs") %>
+<%- include ("./parts/navbar.ejs") %>
 <div class="container">
     <% if (cartErrors) { %>
-        <div class="alert alert-danger">
-            <%= cartErrors.msg %> 
-        </div>    
-    <% } %> 
-    <% if (!product) { %> 
+    <div class="alert alert-danger">
+        <%= cartErrors.msg %>
+    </div>
+    <% } %>
+    <% if (!product) { %>
     <div class="alert alert-danger">
         No such item exists.
-    </div>    
-    <% } else {%> 
-        <div class="row">
-            <div class="col col-12 col-md-6">
-                <div class="card" style="width: 100%;">
-                    <img src="/<%= product.img%>" class="card-img-top" style="max-height: 400px">
-                    <div class="card-body">
-                        <form action="/cart" method="POST" class="add-to-cart-form"> 
-                            <input type="number" name="amount" class="form-control">
-                            <input type="hidden" name="productId" value="<%=product._id %>">
-                            <input type="hidden" name="productName" value="<%= product.name %>" >
-                            <input type="hidden" name="productPrice" value=<%=product.price%>>
-                            <input type="hidden" name="redirectTo" value=<%='/product/'+ product._id%>>
-                            <input type="submit" value="Add to cart" class="btn btn-primary">
-                        </form>
-                    </div>
+    </div>
+    <% } else {%>
+    <div class="row mt-5">
+        <div class="col col-12 col-md-6">
+            <div class="card" style="width: 100%;">
+                <img src="/<%= product.img%>" class="card-img-top">
+                <div class="card-body">
+                    <form action="/cart" method="POST" class="add-to-cart-form">
+                        <input type="number" name="amount" placeholder="Quantity" class="form-control mb-2">
+                        <input type="hidden" name="productId" value="<%=product._id %>">
+                        <input type="hidden" name="productName" value="<%= product.name %>">
+                        <input type="hidden" name="productPrice" value=<%=product.price%>>
+                        <input type="hidden" name="redirectTo" value=<%='/product/'+ product._id%>>
+                        <input type="submit" value="Add to cart" class="btn btn-primary">
+                    </form>
                 </div>
             </div>
-            <div class="col col-12 col-md-6 product-detail">
-                <h3><%= product.name%></h3>
-                <h5>Price: <%= product.price%> $</h5>
-                <p><%= product.description%></p>
-            </div>
         </div>
-    <% } %> 
+        <div class="col col-12 col-md-6 product-detail">
+            <h2><%= product.name%></h2>
+            <h5 class="text-info">Price: $<%= product.price%></h5>
+            <p class="text-muted"><%= product.description%></p>
+        </div>
+    </div>
+    <% } %>
 </div>
-
-
-<%- include ("./parts/footer.ejs") %> 
+<%- include ("./parts/footer.ejs") %>
