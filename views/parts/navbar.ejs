@@ -6,29 +6,29 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <div class="container">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item <%= pageTitle === "Home"? "active":""%>">
               <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
             <% if (isUser) { %> 
-              <li class="nav-item">
+              <li class="nav-item <%= pageTitle === "Cart"? "active":""%>">
                 <a class="nav-link" href="/cart">Cart</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item <%= pageTitle === "Orders"? "active":""%>">
                 <a class="nav-link" href="/orders">Orders</a>
               </li> 
             <% } else {%>  
-              <li class="nav-item">
+              <li class="nav-item <%= pageTitle === "Login"? "active":""%>">
                 <a class="nav-link" href="/login">Login</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item <%= pageTitle === "Signup"? "active":""%>">
                 <a class="nav-link" href="/signup">Signup</a>
               </li>
             <% } %> 
             <% if (isAdmin) {%> 
-                <li class="nav-item">
+                <li class="nav-item <%= pageTitle === "Add Product" ? "active":""%>">
                 <a class="nav-link" href="/admin/add">Add Product</a>
-                </li>
-                <li class="nav-item">
+                </li>                
+                <li class="nav-item <%= pageTitle === "Manage Orders"? "active":""%>">
                 <a class="nav-link" href="/admin/orders">Manage Orders</a>
                 </li>
             <% } %> 

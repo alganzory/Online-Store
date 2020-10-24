@@ -39,11 +39,12 @@ exports.addNewItem = data => {
                             reject (saveErr);
                         })
                     .catch (findErr => {
-                        console.log (findErr)
+                        mongoose.disconnect();
+                        reject (findErr);
                     })
             })
             .catch ( connectionErr => {
-                console.log (connectionErr)
+                reject(connectionErr)
             })
     })
 }
@@ -118,7 +119,7 @@ exports.deleteAllByUserId = userId => {
                     mongoose.disconnect();
                 })
                 .catch ((deletionError) => {
-                    console.log (deletionError);
+                    reject(deletionError)
                 })
             })
     })

@@ -44,4 +44,29 @@ app.use ('/logout', logoutRouter)
 app.use ('/cart', cartRouter)
 app.use ('/orders', ordersRouter)
 app.use ('/admin', adminRouter)
+
+app.get ('/not-admin', (req,res,next) => {
+    res.status(403);
+    res.render ('not-admin', {
+      pageTitle: 'Not authorized',
+      isUser: req.session.userId,
+      isAdmin: false
+    })
+})
+app.get ('/error', (req,res,next) => {
+    res.status(500);
+    res.render ('error', {
+      pageTitle: "Error",
+      isUser: req.session.userId,
+      isAdmin: req.session.isAdmin
+    })
+})
+app.use ((error,req,res,next) => {
+    res.redirect ('/error')
+})
+
+app.use((req, res, next) => {
+  res.status(404).send("Sorry can't find that!")
+})
+
 app.listen (3000, (err)=> console.log ("Listening on port 3000"));

@@ -4,7 +4,7 @@ const ordersModel = require ('../models/orders-model')
 
 exports.getAdd = (req,res,next) => {
     res.render ('add-product', {
-        pageTitle:'Add product',
+        pageTitle:'Add Product',
         inputErrors: req.flash ('inputErrors'),
         isUser: true,
         isAdmin: true
@@ -23,9 +23,7 @@ exports.postAdd = (req,res,next) => {
             .then((newProductId)=> {
                 res.redirect('/product/'+newProductId);
             })
-            .catch (err => {
-                console.log (err);
-            })
+            .catch (err => next (err))
     } else {
         req.flash ('inputErrors', validationResult(req).array());
         res.redirect ('/admin/add');
@@ -59,9 +57,7 @@ exports.getOrders = (req,res,next) => {
                 orders:orders
             })
         })
-        .catch (err => {
-            console.log (err);
-        })
+        .catch (err => next (err))
 
 }
 
@@ -76,8 +72,6 @@ exports.updateStatus = (req,res,next) => {
           })
               .then (() => {
                   res.redirect ('/admin/orders');
-              }).catch (err => {
-                  console.log (err)
-              })
+              }).catch (err => next (err))
     }
 }

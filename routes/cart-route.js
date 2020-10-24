@@ -61,9 +61,4 @@ router.get ('/confirm/:itemId',
     cartController.confirmOneGet
 )
 
-router.post ('/cancel', 
-    authGuard.isAuth,
-    cartController.cancelAll
-)
-
 module.exports = router

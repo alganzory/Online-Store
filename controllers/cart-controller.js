@@ -14,9 +14,7 @@ exports.getCart = (req, res, next) => {
                 items: items,
                 isAdmin:req.session.isAdmin
             })
-        ).catch (err => {
-            console.log (err)
-        }) 
+        ).catch (err => next (err)) 
 }
 
 exports.postCart = (req,res,next) => {
@@ -30,9 +28,7 @@ exports.postCart = (req,res,next) => {
             timeStamp: Date.now()
         }).then (() => {
             res.redirect ('/cart');
-        }).catch (err => {
-            console.log (err)
-        })
+        }).catch (err => next (err))
     }
     else {
         req.flash ('cartErrors', validationResult(req).array());
@@ -48,9 +44,7 @@ exports.editCart = (req,res,next) => {
         })
             .then (() => {
                 res.redirect ('/cart');
-            }).catch (err => {
-                console.log (err)
-            })
+            }).catch (err => next (err))
     }
     else {
         req.flash ('cartErrors', validationResult(req).array());
@@ -64,9 +58,7 @@ exports.deleteFromCart = (req,res,next) => {
         cartModel.deleteItemById(req.body.cartId)
             .then (() => {
                 res.redirect ('/cart');
-            }).catch (err => {
-                console.log (err)
-            })
+            }).catch (err => next (err))
     }
     else {
         req.flash ('cartErrors', validationResult(req).array());
@@ -80,9 +72,7 @@ exports.deleteAll = (req,res,next) => {
     cartModel.deleteAllByUserId (req.session.userId)
         .then (() => {
             res.redirect ('/cart');
-        }).catch (err => {
-            console.log (err)
-        })
+        }).catch (err => next (err))
 }
 
 
@@ -96,9 +86,7 @@ exports.confirmAllPost = (req,res,next) => {
 
 exports.confirmOneGet = (req,res,next) => {
     
-    console.log (req.params)
     let itemId = req.params.itemId;
-    console.log (itemId)
     cartModel.getItemById (itemId)
         .then (itemToConfirm => 
             res.render ('cart-confirm', {
@@ -109,10 +97,7 @@ exports.confirmOneGet = (req,res,next) => {
                 addressErrors : req.flash('addressErrors')[0],
                 isAdmin:req.session.isAdmin
             })
-        ).catch (err => {
-           res.redirect ('/')
-           console.log (err)
-        }) 
+        ).catch (err => next (err))
 }
 
 exports.confirmAllGet  = (req,res,next) => {
@@ -128,11 +113,5 @@ exports.confirmAllGet  = (req,res,next) => {
             isAdmin:req.session.isAdmin
         })
     })
-    .catch (err => {
-        console.log (err)
-    }) 
-}
-
-exports.cancelAll = (req,res,next) => {
-    res.redirect ('/cart')
+    .catch (err => next (err))
 }

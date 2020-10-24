@@ -36,7 +36,6 @@ router.post ('/add', adminGuard,
         .isEmpty()
         .withMessage("A category is required"),
     check ('image').custom((value,{req})=> {
-        console.log (req.file)
         if (req.file) return true; //if a file was uploaded a property .file would be defined
         else throw ("An image is required")
     }),

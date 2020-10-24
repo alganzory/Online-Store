@@ -25,15 +25,9 @@ exports.buyOne = (req,res,next) => {
                     .then(()=> {
                         res.redirect('/orders');
                     })
-                    .catch(err=> {
-                        console.log (err);
-                    })
-                .catch(err => {
-                    console.log (err)
-                })
-            .catch (err => {
-                console.log (err);
-            })
+                    .catch (err => next (err))
+                .catch (err => next (err))
+            .catch (err => next (err))
     }
     else {
         req.flash ('addressErrors', validationResult(req).array());
@@ -56,16 +50,10 @@ exports.buyAll = (req,res,next) => {
                             .then(() => {
                                 res.redirect('/orders');
                             })
-                            .catch((deletionError) =>{
-                                console.log (deletionError);
-                            })
+                            .catch (err => next (err))
                     })    
-                    .catch(err => {
-                        console.log(err);
-                    })
-            .catch(err => {
-                console.log (err);
-            })
+                    .catch (err => next (err))
+            .catch (err => next (err))
     }
     else {
         req.flash ('addressErrors', validationResult(req).array());
@@ -86,24 +74,19 @@ exports.getOrders = (req, res, next) => {
                 orders: orders,
                 isAdmin:req.session.isAdmin
             })
-        ).catch (err => {
-            console.log (err)
-        }) 
+        ).catch (err => next (err))
 }
 
 
 exports.editOrder = (req,res,next) => {
     if (validationResult(req).isEmpty()) {
-        console.log (req.body.orderId)
         ordersModel.updateOrderById(req.body.orderId, {
           timeStamp: Date.now(),
           amount: req.body.amount
         })
             .then (() => {
                 res.redirect ('/orders');
-            }).catch (err => {
-                console.log (err)
-            })
+            }).catch (err => next (err))
     }
     else {
         req.flash ('ordersErrors', validationResult(req).array());
@@ -117,9 +100,7 @@ exports.deleteFromOrder = (req,res,next) => {
         ordersModel.deleteOrderById(req.body.orderId)
             .then (() => {
                 res.redirect ('/orders');
-            }).catch (err => {
-                console.log (err)
-            })
+            }).catch (err => next (err))
     }
     else {
         req.flash ('ordersErrors', validationResult(req).array());

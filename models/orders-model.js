@@ -19,14 +19,14 @@ const orderSchema = mongoose.Schema({
 
 // this pre middle ware is going to be activated before the saving of any orders and it will 
 // fetch the username of the user using their useId property
-orderSchema.pre ('save', function() {
+orderSchema.pre ('validate', function() {
     if (this.userId) {
         return UserModel.findById(this.userId)
             .then(result => {
                 this.username = result.username;
             })
             .catch (err => {
-                console.log (err);
+                next(err);
             })
     }
 })
@@ -49,7 +49,7 @@ exports.addNewOrder= data => {
                     reject (saveErr);
                 })
             .catch ( connectionErr => {
-                console.log (connectionErr)
+                reject(connectionErr)
             })
     })
 }
@@ -86,7 +86,7 @@ exports.addManyOrders= (items,address) => {
                 })
     
             .catch ( connectionErr => {
-                console.log (connectionErr)
+                reject (connectionErr)
             })
     })
 }
@@ -161,12 +161,12 @@ exports.getAllOrders = () => {
                         mongoose.disconnect();
                     })
                     .catch (findErr => {
-                        console.log (findErr);
+                        reject (findErr);
                         mongoose.disconnect();
                     })
             })
             .catch(connectionErr=> {
-                console.log (connectionErr);
+                reject (connectionErr);
             }) 
     });
 }
@@ -182,12 +182,12 @@ exports.getOrdersByStatus = status => {
                         mongoose.disconnect();
                     })
                     .catch (findErr => {
-                        console.log (findErr);
+                        reject (findErr);
                         mongoose.disconnect();
                     })
             })
             .catch(connectionErr=> {
-                console.log (connectionErr);
+                reject (connectionErr);
             }) 
     });
 }

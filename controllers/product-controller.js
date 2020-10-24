@@ -15,9 +15,7 @@ exports.getProduct = (req,res,next) => {
                 isAdmin:req.session.isAdmin
             })
         })
-        .catch (err => {
-            console.log (err)
-        })
+        .catch (err => next (err))
     // render 
 }
 

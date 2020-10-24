@@ -4,7 +4,6 @@ const ejs = require("ejs");
 const validationResult = require ("express-validator").validationResult
 
 exports.getSignup = (req, res, next) => {
-    console.log (req.flash ('validationErrors'))
     res.render('signup', {
         pageTitle: 'Signup',
         authError: req.flash("authError")[0],

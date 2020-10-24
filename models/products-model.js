@@ -25,7 +25,8 @@ exports.getAllProducts = ()=> {
                 mongoose.disconnect();
                 resolve (products);
             }).catch (err => reject (err))
-        })    
+        })
+        .catch(err => reject (err))
     })  
 }
 
@@ -33,14 +34,21 @@ exports.getProductsByCategory = (category) => {
     return new Promise ((resolve, reject )=> {
         // connect to DB
        mongoose.connect (DB_URL)
-       .then (() => {Product.find({
-           category: category
-       })
-       .then (products => {
-               mongoose.disconnect();
-               resolve (products);
-           }).catch (err => reject (err))
-       })    
+       .then (() => {
+           Product.find({category: category})
+            .then (products => {
+                    mongoose.disconnect();
+                    resolve (products);
+                }).catch (err => {
+                    reject (err);
+                    mongoose.disconnect();
+                })
+            })
+            .catch (err => {
+                reject (err);
+                mongoose.disconnect();
+            })
+        .catch (err => reject(err))
    })  
 }
 
@@ -51,11 +59,15 @@ exports.getProductById =(id) => {
         .then (() => {
             Product.findById(id)
                 .then (product => {
-                resolve (product);
-                mongoose.disconnect();
-            })
-            .catch (err => reject (err))
+                    resolve (product);
+                    mongoose.disconnect();
+                })
+                .catch (err => {
+                    reject (err)
+                    mongoose.disconnect();
+                })
         })
+        .catch (err => reject (err))
         
    })  
 }
@@ -90,5 +102,6 @@ exports.newProduct = data => {
                         mongoose.disconnect();
                     })
             })
+            .catch (err => reject (err))
     })
 }
