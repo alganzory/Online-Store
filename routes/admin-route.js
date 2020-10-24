@@ -43,4 +43,12 @@ router.post ('/add', adminGuard,
     adminController.postAdd 
 )
 
+
+router.get ('/orders', adminGuard, adminController.getOrders)
+
+router.post('/orders/update', 
+    adminGuard, 
+    bodyParser.urlencoded({extended:true}),
+    adminController.updateStatus)
+
 module.exports = router

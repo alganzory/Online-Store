@@ -1,0 +1,79 @@
+<%- include ("./parts/header.ejs") %> 
+<%- include ("./parts/navbar.ejs") %> 
+
+
+<div class="container">
+    <h3 class="mt-4 mb-4">
+    Manage Orders
+    </h3>
+    <% if(orders.length === 0) { %>
+        <p class="alert alert-danger">No orders</p>
+    <% } else { %>
+       
+                <form class='mt-4 mb-4' action="/admin/orders" method="GET"> 
+                    <div class="row"> 
+                    <div class="col-sm">
+                        <select name="status" class="form-control" id="status">
+                            <option value="all">All</option>
+                            <option value="pending">Pending</option>
+                            <option value="sent">Sent</option>
+                            <option value="complete">complete</option>
+                        </select>
+                        <input type="submit" value="filter" class="btn btn-primary mt-2">
+                    </div>
+                    <div class="col-sm">
+                        <input name="search" type="text" class="form-control" placeholder="Search by username">
+                        <input type="submit" value="Search" class="btn btn-primary mt-2">
+                        <a href="/admin/orders" class="btn btn-dark mt-2" >Reset</a>
+                    </div>
+                </div>  
+                </form>
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">User</th>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Total</th>
+                <th scope="col">Address</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+                <% for (let i =0; i< orders.length; i++ ){  %> 
+                    <tr>
+                        <th scope="row"><%= i+1 %> </th>
+                        <td><%= orders[i].username %> </td>
+                        <td> <a href="/product/<%= orders[i].productId %>"><%= orders[i].name %></a> </td>
+                        <td> $<%= orders[i].price %> </td>
+                        <td> <%= orders[i].amount %> </td>
+                        <td> $<%= orders[i].price * orders[i].amount %> </td>
+                        <td> <%= orders[i].address%> </td>
+                        <form method="POST" action="/admin/orders/update">
+                            <td>
+                                <select type="password" class="form-control" name="status">
+                                    <option value="none" selected disabled hidden> 
+                                        <%= orders[i].status%>
+                                    </option> 
+                                    <option value="pending">pending</option>
+                                    <option value="sent">sent</option>
+                                    <option value="complete">complete</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="hidden" name="orderId" value="<%= orders[i]._id %>">
+                                <input type="submit" class="btn btn-info" value="Update status" >
+                            </td>
+                        </form>
+                    </tr>
+                <% } %> 
+            </tbody>
+        </table>
+      <% } %> 
+  </div>
+  <script>
+      const searchInput = document.querySelector ('.search');
+  </script>
+  <%- include ("./parts/footer.ejs") %> 

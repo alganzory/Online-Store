@@ -1,5 +1,6 @@
 const validationResult = require("express-validator").validationResult;
 const productsModel = require ('../models/products-model');
+const ordersModel = require ('../models/orders-model')
 
 exports.getAdd = (req,res,next) => {
     res.render ('add-product', {
@@ -28,5 +29,55 @@ exports.postAdd = (req,res,next) => {
     } else {
         req.flash ('inputErrors', validationResult(req).array());
         res.redirect ('/admin/add');
+    }
+}
+
+exports.getOrders = (req,res,next) => {
+    let status = req.query.status;
+    let ordersModelPromise;
+    let validStatuses = ['pending', 'sent', 'complete']
+
+    let search = req.query.search;
+
+    // if filtering: 
+    if (status && validStatuses.includes(status)) 
+        ordersModelPromise = ordersModel.getOrdersByStatus(status);
+    else 
+        ordersModelPromise = ordersModel.getAllOrders();
+        
+    // get the order from the Database, 
+    ordersModelPromise
+        .then(orders => {
+            if (search) {
+                orders = orders.filter(order => order.username.includes(search));
+            }
+            res.render ('manage-orders' , {
+                pageTitle: 'Manage Orders',
+                searchErrors: req.flash ('searchErrors')[0],
+                isUser: true,
+                isAdmin: true,
+                orders:orders
+            })
+        })
+        .catch (err => {
+            console.log (err);
+        })
+
+}
+
+exports.updateStatus = (req,res,next) => {
+    let status = req.body.status;
+    if (status == undefined) {
+        res.redirect('/admin/orders');
+    } else {
+        ordersModel.updateOrderById(req.body.orderId, {
+            timeStamp: Date.now(),
+            status: status
+          })
+              .then (() => {
+                  res.redirect ('/admin/orders');
+              }).catch (err => {
+                  console.log (err)
+              })
     }
 }
