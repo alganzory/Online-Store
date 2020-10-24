@@ -26,14 +26,14 @@
                 <td> $<%= orders[i].price %> </td>
                 
                 <form method="POST">
-                    <% if (!orders[i].status) {%>
+                    <% if (orders[i].status === 'pending') {%>
                         <td> <input type="text" name="amount" class="form-control" value="<%= orders[i].amount %>"> </td>
                     <% } else { %>  
                        <td> <%= orders[i].amount %> </td>
                     <% } %> 
                     <td> $<%= orders[i].price * orders[i].amount %> </td>
-                    <% if (!orders[i].status) { %>
-                        <td>Pending</td>             
+                    <td> <%=orders[i].status%> </td>
+                    <% if (orders[i].status === 'pending') {%>
                     <td>
                         <input type="hidden" name="orderId" value="<%= orders[i]._id %>">
                         <input type="submit" class="btn btn-info" value="Save" formaction="/orders/save">

@@ -1,16 +1,34 @@
-const mongoose = require ('mongoose')
-
+const mongoose = require ('mongoose');
+const { UserModel } = require('./auth-model');
+const authModel = require ('./auth-model').UserModel
 const DB_URL= "mongodb://localhost:27017/online-store";
 const orderSchema = mongoose.Schema({
     name:String,
     amount:Number,
     price: Number,
     userId: String,
+    username: String,
     productId: String,
     timeStamp: Number,
     address: String,
-    status: Number
+    status: {
+        type:String,
+        default: "pending"
+    }
+})
 
+// this pre middle ware is going to be activated before the saving of any orders and it will 
+// fetch the username of the user using their useId property
+orderSchema.pre ('save', function() {
+    if (this.userId) {
+        return UserModel.findById(this.userId)
+            .then(result => {
+                this.username = result.username;
+            })
+            .catch (err => {
+                console.log (err);
+            })
+    }
 })
 const Order = mongoose.model ('order', orderSchema);
 
@@ -53,7 +71,6 @@ exports.addManyOrders= (items,address) => {
                         productId: item.productId,
                         timeStamp: Date.now(),
                         address:address,
-                        status: 0
                         })
                     )
                 }
@@ -131,3 +148,48 @@ exports.deleteOrderById = orderId => {
             })
     })
 }
+
+exports.getAllOrders = () => {
+
+    return new Promise ((resolve,reject) => {
+
+        mongoose.connect (DB_URL)
+            .then (()=> {
+                Order.find()
+                    .then (allOrders=> {
+                        resolve (allOrders);
+                        mongoose.disconnect();
+                    })
+                    .catch (findErr => {
+                        console.log (findErr);
+                        mongoose.disconnect();
+                    })
+            })
+            .catch(connectionErr=> {
+                console.log (connectionErr);
+            }) 
+    });
+}
+
+exports.getOrdersByStatus = status => {
+
+    return new Promise ((resolve,reject) => {
+        mongoose.connect (DB_URL)
+            .then (()=> {
+                Order.find({status:status})
+                    .then (orders=> {
+                        resolve (orders);
+                        mongoose.disconnect();
+                    })
+                    .catch (findErr => {
+                        console.log (findErr);
+                        mongoose.disconnect();
+                    })
+            })
+            .catch(connectionErr=> {
+                console.log (connectionErr);
+            }) 
+    });
+}
+
+

@@ -17,7 +17,6 @@ exports.buyOne = (req,res,next) => {
                    productId: item.productId,
                    timeStamp: Date.now(),
                    address:req.body.address,
-                   status: 0
                 })
             })
                 .then (() => {
